@@ -1,4 +1,5 @@
 import ContactMessage from '../models/contactMessage.models.js'
+import { sendContactNotification } from '../config/mailer.js'
 
 // 1. CREATE - Guardar mensaje enviado desde la web (Público)
 export const createMessage = async (req, res) => {
@@ -11,6 +12,11 @@ export const createMessage = async (req, res) => {
 
     const newMessage = new ContactMessage({ fullName, email, eventType, message })
     await newMessage.save()
+
+    // Enviar correo de notificación a carollmolina1993@gmail.com con CC a julian.garzon08@gmail.com
+    sendContactNotification({ fullName, email, eventType, message }).catch((err) => {
+      console.error('Aviso: no se pudo enviar el correo de notificación:', err.message)
+    })
 
     res.status(201).json({ message: 'Mensaje enviado con éxito', data: newMessage })
   } catch (error) {
