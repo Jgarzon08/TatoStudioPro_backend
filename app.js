@@ -1,7 +1,11 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
+import dns from 'node:dns';
 import { connectionMongoDb } from './src/config/database.js';
+
+// Priorizar resolución IPv4 en todas las conexiones de Node.js
+dns.setDefaultResultOrder('ipv4first');
 
 // Importación de rutas
 import userRouter from './src/routes/user.routes.js';

@@ -25,9 +25,12 @@ if (isMailerConfigured) {
  * Destinatario principal: carollmolina1993@gmail.com
  * Copia (CC): julian.garzon08@gmail.com
  */
-export const sendContactNotification = async ({ fullName, email, eventType, message }) => {
+export const sendContactNotification = async ({ fullName, email, phone, eventType, message }) => {
   const recipientTo = 'carollmolina1993@gmail.com';
   const recipientCc = 'julian.garzon08@gmail.com';
+
+  const cleanPhone = phone ? phone.replace(/[^0-9]/g, '') : '';
+  const waUrl = cleanPhone.length === 10 ? `https://wa.me/57${cleanPhone}` : `https://wa.me/${cleanPhone}`;
 
   const htmlContent = `
     <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #faf8f5; border: 1px solid #e2ded7; border-radius: 8px; overflow: hidden;">
@@ -48,6 +51,12 @@ export const sendContactNotification = async ({ fullName, email, eventType, mess
             <td style="padding: 12px 16px; font-weight: bold; border-bottom: 1px solid #f0ede8; color: #6b665f;">Correo electrónico:</td>
             <td style="padding: 12px 16px; border-bottom: 1px solid #f0ede8;">
               <a href="mailto:${email}" style="color: #b38b42; text-decoration: none; font-weight: 600;">${email}</a>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 12px 16px; font-weight: bold; border-bottom: 1px solid #f0ede8; color: #6b665f;">Teléfono / WhatsApp:</td>
+            <td style="padding: 12px 16px; border-bottom: 1px solid #f0ede8; font-weight: 600; color: #1a1918;">
+              ${phone ? `<a href="${waUrl}" target="_blank" style="color: #128c7e; text-decoration: none; font-weight: bold;">💬 ${phone} (Abrir WhatsApp)</a>` : 'No proporcionado'}
             </td>
           </tr>
           <tr>

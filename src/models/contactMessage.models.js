@@ -12,6 +12,12 @@ const contactMessageSchema = new mongoose.Schema({
       lowercase: true,
       trim: true
     },
+    phone: {
+      type: String,
+      required: [true, 'El número de teléfono/WhatsApp es obligatorio'],
+      trim: true,
+      default: ''
+    },
     eventType: {
       type: String,
       required: [true, 'El tipo de evento es obligatorio'],
@@ -30,4 +36,5 @@ const contactMessageSchema = new mongoose.Schema({
 },
 { timestamps: true }
 );
+
 export default mongoose.model('ContactMessage', contactMessageSchema);
